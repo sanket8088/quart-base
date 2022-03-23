@@ -1,0 +1,2105 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Credgenics Communication API Documentation",
+    "description": "This is Credgenics' Backend server. You can find out more about credgenics at [https://app.credgenics.com/](https://app.credgenics.com/).",
+    "termsOfService": "https://www.credgenics.com/contact",
+    "contact": {
+      "email": "sanket@credgenics.com"
+    },
+    "version": "1.0.0"
+  },
+  "externalDocs": {
+    "description": "Find out more about Credgenics",
+    "url": "https://www.credgenics.com/about"
+  },
+  "servers": [
+    {
+      "url": "https://{subdomain}.credgenics.com/communication",
+      "variables": {
+        "subdomain": {
+          "enum": [
+            "p4-api.dev",
+            "api.staging",
+            "apiuat",
+            "apiprod"
+          ],
+          "default": "p4-api.dev"
+        }
+      }
+    }
+  ],
+  "tags": [
+    {
+      "name": "whastapp",
+      "description": "API's associated with whatsapp communication"
+    },
+    {
+      "name": "ivr",
+      "description": "API's associated with ivr communication"
+    },
+    {
+      "name": "communication",
+      "description": "API's associated with communication module"
+    }
+  ],
+  "paths": {
+    "/add_notice_map": {
+      "post": {
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Added successfully"
+          },
+          "400": {
+            "description": "Unable to process request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorResponse"
+                },
+                "examples": {
+                  "RequestProcessError": {
+                    "$ref": "#/components/examples/RequestProcessError"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authrization error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorResponse"
+                },
+                "examples": {
+                  "RequestProcessError": {
+                    "$ref": "#/components/examples/AuthorizationError"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Request route not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorResponse"
+                },
+                "examples": {
+                  "RequestProcessError": {
+                    "$ref": "#/components/examples/RouteNotFound"
+                  }
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Method not allowed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorResponse"
+                },
+                "examples": {
+                  "RequestProcessError": {
+                    "$ref": "#/components/examples/MethodNotAllowed"
+                  }
+                }
+              }
+            }
+          },
+          "408": {
+            "description": "Resource timed out",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorResponse"
+                },
+                "examples": {
+                  "RequestProcessError": {
+                    "$ref": "#/components/examples/TimeOut"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/communication/create": {
+      "post": {
+        "description": "Depriciated",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Added successfully"
+          },
+          "400": {
+            "description": "Unable to process request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorResponse"
+                },
+                "examples": {
+                  "RequestProcessError": {
+                    "$ref": "#/components/examples/RequestProcessError"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authrization error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorResponse"
+                },
+                "examples": {
+                  "RequestProcessError": {
+                    "$ref": "#/components/examples/AuthorizationError"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Request route not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorResponse"
+                },
+                "examples": {
+                  "RequestProcessError": {
+                    "$ref": "#/components/examples/RouteNotFound"
+                  }
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Method not allowed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorResponse"
+                },
+                "examples": {
+                  "RequestProcessError": {
+                    "$ref": "#/components/examples/MethodNotAllowed"
+                  }
+                }
+              }
+            }
+          },
+          "408": {
+            "description": "Resource timed out",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorResponse"
+                },
+                "examples": {
+                  "RequestProcessError": {
+                    "$ref": "#/components/examples/TimeOut"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": ""
+      }
+    },
+    "/create": {
+      "post": {
+        "tags": [
+          "communication"
+        ],
+        "description": "send mail or sms or whastapp or anything Email , SMS , Voice, Whatsapp Sends Communication using third party services 1. Email - sendgrid 2. Sms, Voice - Infobip 3. Whatsapp - Gupshup",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "type_of_comm": {
+                    "title": "Communication type",
+                    "type": "string"
+                  },
+                  "status": {
+                    "title": "status of comm",
+                    "type": "string"
+                  },
+                  "template_id": {
+                    "title": "template id",
+                    "type": "string"
+                  },
+                  "allocation_month": {
+                    "title": "Allocation month",
+                    "type": "string"
+                  },
+                  "upto_index": {
+                    "title": "Upto Index",
+                    "type": "string"
+                  },
+                  "send_to": {
+                    "title": "send to who",
+                    "type": "string"
+                  },
+                  "communication_level": {
+                    "title": "Communication level",
+                    "type": "string"
+                  },
+                  "comm_dict": {
+                    "title": "comm dict",
+                    "type": "object"
+                  },
+                  "send_to_closed_acc": {
+                    "title": "send to closed account",
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "type_of_comm",
+                  "allocation_month"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Added successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/templatingSuccessResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Unable to process request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorResponse"
+                },
+                "examples": {
+                  "RequestProcessError": {
+                    "$ref": "#/components/examples/RequestProcessError"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authrization error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorResponse"
+                },
+                "examples": {
+                  "RequestProcessError": {
+                    "$ref": "#/components/examples/AuthorizationError"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Request route not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorResponse"
+                },
+                "examples": {
+                  "RequestProcessError": {
+                    "$ref": "#/components/examples/RouteNotFound"
+                  }
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Method not allowed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorResponse"
+                },
+                "examples": {
+                  "RequestProcessError": {
+                    "$ref": "#/components/examples/MethodNotAllowed"
+                  }
+                }
+              }
+            }
+          },
+          "408": {
+            "description": "Resource timed out",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorResponse"
+                },
+                "examples": {
+                  "RequestProcessError": {
+                    "$ref": "#/components/examples/TimeOut"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": ""
+      }
+    },
+    "/ivr/create": {
+      "post": {
+        "tags": [
+          "ivr"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "allocation_month": {
+                    "title": "Allocation Month",
+                    "type": "string"
+                  },
+                  "comm_dict": {
+                    "title": "Comm Dict",
+                    "type": "string"
+                  },
+                  "communication_level": {
+                    "title": "Communication Level",
+                    "type": "string"
+                  },
+                  "send_to": {
+                    "title": "Send To",
+                    "type": "string"
+                  },
+                  "send_to_closed_acc": {
+                    "title": "Send To Closed Acc",
+                    "type": "string"
+                  },
+                  "template_id": {
+                    "title": "Template Id",
+                    "type": "string"
+                  },
+                  "type_of_comm": {
+                    "title": "Type Of Comm",
+                    "type": "string"
+                  },
+                  "upto_index": {
+                    "title": "Upto Index",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "type_of_comm",
+                  "template_id",
+                  "allocation_month",
+                  "upto_index",
+                  "send_to",
+                  "communication_level",
+                  "comm_dict",
+                  "send_to_closed_acc"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Added successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/templatingSuccessResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Unable to process request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorResponse"
+                },
+                "examples": {
+                  "RequestProcessError": {
+                    "$ref": "#/components/examples/RequestProcessError"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authrization error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorResponse"
+                },
+                "examples": {
+                  "RequestProcessError": {
+                    "$ref": "#/components/examples/AuthorizationError"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Request route not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorResponse"
+                },
+                "examples": {
+                  "RequestProcessError": {
+                    "$ref": "#/components/examples/RouteNotFound"
+                  }
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Method not allowed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorResponse"
+                },
+                "examples": {
+                  "RequestProcessError": {
+                    "$ref": "#/components/examples/MethodNotAllowed"
+                  }
+                }
+              }
+            }
+          },
+          "408": {
+            "description": "Resource timed out",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorResponse"
+                },
+                "examples": {
+                  "RequestProcessError": {
+                    "$ref": "#/components/examples/TimeOut"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ivr/templates": {
+      "delete": {
+        "tags": [
+          "ivr"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Added successfully"
+          },
+          "400": {
+            "description": "Unable to process request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorResponse"
+                },
+                "examples": {
+                  "RequestProcessError": {
+                    "$ref": "#/components/examples/RequestProcessError"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authrization error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorResponse"
+                },
+                "examples": {
+                  "RequestProcessError": {
+                    "$ref": "#/components/examples/AuthorizationError"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Request route not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorResponse"
+                },
+                "examples": {
+                  "RequestProcessError": {
+                    "$ref": "#/components/examples/RouteNotFound"
+                  }
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Method not allowed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorResponse"
+                },
+                "examples": {
+                  "RequestProcessError": {
+                    "$ref": "#/components/examples/MethodNotAllowed"
+                  }
+                }
+              }
+            }
+          },
+          "408": {
+            "description": "Resource timed out",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorResponse"
+                },
+                "examples": {
+                  "RequestProcessError": {
+                    "$ref": "#/components/examples/TimeOut"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "ivr"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Added successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/templatingSuccessResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Unable to process request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorResponse"
+                },
+                "examples": {
+                  "RequestProcessError": {
+                    "$ref": "#/components/examples/RequestProcessError"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authrization error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorResponse"
+                },
+                "examples": {
+                  "RequestProcessError": {
+                    "$ref": "#/components/examples/AuthorizationError"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Request route not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorResponse"
+                },
+                "examples": {
+                  "RequestProcessError": {
+                    "$ref": "#/components/examples/RouteNotFound"
+                  }
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Method not allowed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorResponse"
+                },
+                "examples": {
+                  "RequestProcessError": {
+                    "$ref": "#/components/examples/MethodNotAllowed"
+                  }
+                }
+              }
+            }
+          },
+          "408": {
+            "description": "Resource timed out",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorResponse"
+                },
+                "examples": {
+                  "RequestProcessError": {
+                    "$ref": "#/components/examples/TimeOut"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "ivr"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "template_name": {
+                    "title": "Name of template",
+                    "type": "string"
+                  },
+                  "description": {
+                    "title": "description for template",
+                    "type": "string"
+                  },
+                  "variables": {
+                    "title": "All variables",
+                    "type": "string"
+                  },
+                  "report_variables": {
+                    "title": "Reporting variables",
+                    "type": "string"
+                  },
+                  "flow_id": {
+                    "title": "Flow id",
+                    "type": "string"
+                  },
+                  "archive": {
+                    "title": "is template archived",
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "template_name",
+                  "description",
+                  "variables",
+                  "report_variables",
+                  "flow_id",
+                  "archive"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Added successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/templatingSuccessResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Unable to process request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorResponse"
+                },
+                "examples": {
+                  "RequestProcessError": {
+                    "$ref": "#/components/examples/RequestProcessError"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authrization error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorResponse"
+                },
+                "examples": {
+                  "RequestProcessError": {
+                    "$ref": "#/components/examples/AuthorizationError"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Request route not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorResponse"
+                },
+                "examples": {
+                  "RequestProcessError": {
+                    "$ref": "#/components/examples/RouteNotFound"
+                  }
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Method not allowed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorResponse"
+                },
+                "examples": {
+                  "RequestProcessError": {
+                    "$ref": "#/components/examples/MethodNotAllowed"
+                  }
+                }
+              }
+            }
+          },
+          "408": {
+            "description": "Resource timed out",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorResponse"
+                },
+                "examples": {
+                  "RequestProcessError": {
+                    "$ref": "#/components/examples/TimeOut"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "ivr"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "template_name": {
+                    "title": "Name of template",
+                    "type": "string"
+                  },
+                  "description": {
+                    "title": "description for template",
+                    "type": "string"
+                  },
+                  "variables": {
+                    "title": "All variables",
+                    "type": "string"
+                  },
+                  "report_variables": {
+                    "title": "Reporting variables",
+                    "type": "string"
+                  },
+                  "flow_id": {
+                    "title": "Flow id",
+                    "type": "string"
+                  },
+                  "archive": {
+                    "title": "is template archived",
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "template_name",
+                  "description",
+                  "variables",
+                  "report_variables",
+                  "flow_id",
+                  "archive"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Added successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/templatingSuccessResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Unable to process request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorResponse"
+                },
+                "examples": {
+                  "RequestProcessError": {
+                    "$ref": "#/components/examples/RequestProcessError"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authrization error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorResponse"
+                },
+                "examples": {
+                  "RequestProcessError": {
+                    "$ref": "#/components/examples/AuthorizationError"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Request route not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorResponse"
+                },
+                "examples": {
+                  "RequestProcessError": {
+                    "$ref": "#/components/examples/RouteNotFound"
+                  }
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Method not allowed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorResponse"
+                },
+                "examples": {
+                  "RequestProcessError": {
+                    "$ref": "#/components/examples/MethodNotAllowed"
+                  }
+                }
+              }
+            }
+          },
+          "408": {
+            "description": "Resource timed out",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorResponse"
+                },
+                "examples": {
+                  "RequestProcessError": {
+                    "$ref": "#/components/examples/TimeOut"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/mail": {
+      "post": {
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Added successfully"
+          },
+          "400": {
+            "description": "Unable to process request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorResponse"
+                },
+                "examples": {
+                  "RequestProcessError": {
+                    "$ref": "#/components/examples/RequestProcessError"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authrization error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorResponse"
+                },
+                "examples": {
+                  "RequestProcessError": {
+                    "$ref": "#/components/examples/AuthorizationError"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Request route not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorResponse"
+                },
+                "examples": {
+                  "RequestProcessError": {
+                    "$ref": "#/components/examples/RouteNotFound"
+                  }
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Method not allowed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorResponse"
+                },
+                "examples": {
+                  "RequestProcessError": {
+                    "$ref": "#/components/examples/MethodNotAllowed"
+                  }
+                }
+              }
+            }
+          },
+          "408": {
+            "description": "Resource timed out",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorResponse"
+                },
+                "examples": {
+                  "RequestProcessError": {
+                    "$ref": "#/components/examples/TimeOut"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/mail/send": {
+      "post": {
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Added successfully"
+          },
+          "400": {
+            "description": "Unable to process request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorResponse"
+                },
+                "examples": {
+                  "RequestProcessError": {
+                    "$ref": "#/components/examples/RequestProcessError"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authrization error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorResponse"
+                },
+                "examples": {
+                  "RequestProcessError": {
+                    "$ref": "#/components/examples/AuthorizationError"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Request route not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorResponse"
+                },
+                "examples": {
+                  "RequestProcessError": {
+                    "$ref": "#/components/examples/RouteNotFound"
+                  }
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Method not allowed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorResponse"
+                },
+                "examples": {
+                  "RequestProcessError": {
+                    "$ref": "#/components/examples/MethodNotAllowed"
+                  }
+                }
+              }
+            }
+          },
+          "408": {
+            "description": "Resource timed out",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorResponse"
+                },
+                "examples": {
+                  "RequestProcessError": {
+                    "$ref": "#/components/examples/TimeOut"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/mail_attach": {
+      "post": {
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Added successfully"
+          },
+          "400": {
+            "description": "Unable to process request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorResponse"
+                },
+                "examples": {
+                  "RequestProcessError": {
+                    "$ref": "#/components/examples/RequestProcessError"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authrization error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorResponse"
+                },
+                "examples": {
+                  "RequestProcessError": {
+                    "$ref": "#/components/examples/AuthorizationError"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Request route not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorResponse"
+                },
+                "examples": {
+                  "RequestProcessError": {
+                    "$ref": "#/components/examples/RouteNotFound"
+                  }
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Method not allowed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorResponse"
+                },
+                "examples": {
+                  "RequestProcessError": {
+                    "$ref": "#/components/examples/MethodNotAllowed"
+                  }
+                }
+              }
+            }
+          },
+          "408": {
+            "description": "Resource timed out",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorResponse"
+                },
+                "examples": {
+                  "RequestProcessError": {
+                    "$ref": "#/components/examples/TimeOut"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/public/healthz": {
+      "get": {
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Added successfully"
+          },
+          "400": {
+            "description": "Unable to process request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorResponse"
+                },
+                "examples": {
+                  "RequestProcessError": {
+                    "$ref": "#/components/examples/RequestProcessError"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authrization error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorResponse"
+                },
+                "examples": {
+                  "RequestProcessError": {
+                    "$ref": "#/components/examples/AuthorizationError"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Request route not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorResponse"
+                },
+                "examples": {
+                  "RequestProcessError": {
+                    "$ref": "#/components/examples/RouteNotFound"
+                  }
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Method not allowed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorResponse"
+                },
+                "examples": {
+                  "RequestProcessError": {
+                    "$ref": "#/components/examples/MethodNotAllowed"
+                  }
+                }
+              }
+            }
+          },
+          "408": {
+            "description": "Resource timed out",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorResponse"
+                },
+                "examples": {
+                  "RequestProcessError": {
+                    "$ref": "#/components/examples/TimeOut"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/public/update/optin": {
+      "post": {
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Added successfully"
+          },
+          "400": {
+            "description": "Unable to process request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorResponse"
+                },
+                "examples": {
+                  "RequestProcessError": {
+                    "$ref": "#/components/examples/RequestProcessError"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authrization error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorResponse"
+                },
+                "examples": {
+                  "RequestProcessError": {
+                    "$ref": "#/components/examples/AuthorizationError"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Request route not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorResponse"
+                },
+                "examples": {
+                  "RequestProcessError": {
+                    "$ref": "#/components/examples/RouteNotFound"
+                  }
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Method not allowed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorResponse"
+                },
+                "examples": {
+                  "RequestProcessError": {
+                    "$ref": "#/components/examples/MethodNotAllowed"
+                  }
+                }
+              }
+            }
+          },
+          "408": {
+            "description": "Resource timed out",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorResponse"
+                },
+                "examples": {
+                  "RequestProcessError": {
+                    "$ref": "#/components/examples/TimeOut"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/sms": {
+      "post": {
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Added successfully"
+          },
+          "400": {
+            "description": "Unable to process request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorResponse"
+                },
+                "examples": {
+                  "RequestProcessError": {
+                    "$ref": "#/components/examples/RequestProcessError"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authrization error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorResponse"
+                },
+                "examples": {
+                  "RequestProcessError": {
+                    "$ref": "#/components/examples/AuthorizationError"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Request route not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorResponse"
+                },
+                "examples": {
+                  "RequestProcessError": {
+                    "$ref": "#/components/examples/RouteNotFound"
+                  }
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Method not allowed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorResponse"
+                },
+                "examples": {
+                  "RequestProcessError": {
+                    "$ref": "#/components/examples/MethodNotAllowed"
+                  }
+                }
+              }
+            }
+          },
+          "408": {
+            "description": "Resource timed out",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorResponse"
+                },
+                "examples": {
+                  "RequestProcessError": {
+                    "$ref": "#/components/examples/TimeOut"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/template/verify": {
+      "post": {
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Added successfully"
+          },
+          "400": {
+            "description": "Unable to process request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorResponse"
+                },
+                "examples": {
+                  "RequestProcessError": {
+                    "$ref": "#/components/examples/RequestProcessError"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authrization error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorResponse"
+                },
+                "examples": {
+                  "RequestProcessError": {
+                    "$ref": "#/components/examples/AuthorizationError"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Request route not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorResponse"
+                },
+                "examples": {
+                  "RequestProcessError": {
+                    "$ref": "#/components/examples/RouteNotFound"
+                  }
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Method not allowed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorResponse"
+                },
+                "examples": {
+                  "RequestProcessError": {
+                    "$ref": "#/components/examples/MethodNotAllowed"
+                  }
+                }
+              }
+            }
+          },
+          "408": {
+            "description": "Resource timed out",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorResponse"
+                },
+                "examples": {
+                  "RequestProcessError": {
+                    "$ref": "#/components/examples/TimeOut"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/update/payments": {
+      "post": {
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Added successfully"
+          },
+          "400": {
+            "description": "Unable to process request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorResponse"
+                },
+                "examples": {
+                  "RequestProcessError": {
+                    "$ref": "#/components/examples/RequestProcessError"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authrization error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorResponse"
+                },
+                "examples": {
+                  "RequestProcessError": {
+                    "$ref": "#/components/examples/AuthorizationError"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Request route not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorResponse"
+                },
+                "examples": {
+                  "RequestProcessError": {
+                    "$ref": "#/components/examples/RouteNotFound"
+                  }
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Method not allowed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorResponse"
+                },
+                "examples": {
+                  "RequestProcessError": {
+                    "$ref": "#/components/examples/MethodNotAllowed"
+                  }
+                }
+              }
+            }
+          },
+          "408": {
+            "description": "Resource timed out",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorResponse"
+                },
+                "examples": {
+                  "RequestProcessError": {
+                    "$ref": "#/components/examples/TimeOut"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/view_content": {
+      "post": {
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Added successfully"
+          },
+          "400": {
+            "description": "Unable to process request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorResponse"
+                },
+                "examples": {
+                  "RequestProcessError": {
+                    "$ref": "#/components/examples/RequestProcessError"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authrization error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorResponse"
+                },
+                "examples": {
+                  "RequestProcessError": {
+                    "$ref": "#/components/examples/AuthorizationError"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Request route not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorResponse"
+                },
+                "examples": {
+                  "RequestProcessError": {
+                    "$ref": "#/components/examples/RouteNotFound"
+                  }
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Method not allowed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorResponse"
+                },
+                "examples": {
+                  "RequestProcessError": {
+                    "$ref": "#/components/examples/MethodNotAllowed"
+                  }
+                }
+              }
+            }
+          },
+          "408": {
+            "description": "Resource timed out",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorResponse"
+                },
+                "examples": {
+                  "RequestProcessError": {
+                    "$ref": "#/components/examples/TimeOut"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/whatsapp": {
+      "post": {
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Added successfully"
+          },
+          "400": {
+            "description": "Unable to process request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorResponse"
+                },
+                "examples": {
+                  "RequestProcessError": {
+                    "$ref": "#/components/examples/RequestProcessError"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authrization error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorResponse"
+                },
+                "examples": {
+                  "RequestProcessError": {
+                    "$ref": "#/components/examples/AuthorizationError"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Request route not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorResponse"
+                },
+                "examples": {
+                  "RequestProcessError": {
+                    "$ref": "#/components/examples/RouteNotFound"
+                  }
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Method not allowed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorResponse"
+                },
+                "examples": {
+                  "RequestProcessError": {
+                    "$ref": "#/components/examples/MethodNotAllowed"
+                  }
+                }
+              }
+            }
+          },
+          "408": {
+            "description": "Resource timed out",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorResponse"
+                },
+                "examples": {
+                  "RequestProcessError": {
+                    "$ref": "#/components/examples/TimeOut"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/whatsapp/optin": {
+      "post": {
+        "tags": [
+          "whastapp"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "company_id": {
+                    "title": "Company id",
+                    "type": "string"
+                  },
+                  "loan_id": {
+                    "title": "Loan id",
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Added successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/successResponse"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Added successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/successResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Unable to process request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorResponse"
+                },
+                "examples": {
+                  "RequestProcessError": {
+                    "$ref": "#/components/examples/RequestProcessError"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authrization error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorResponse"
+                },
+                "examples": {
+                  "RequestProcessError": {
+                    "$ref": "#/components/examples/AuthorizationError"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Request route not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorResponse"
+                },
+                "examples": {
+                  "RequestProcessError": {
+                    "$ref": "#/components/examples/RouteNotFound"
+                  }
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Method not allowed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorResponse"
+                },
+                "examples": {
+                  "RequestProcessError": {
+                    "$ref": "#/components/examples/MethodNotAllowed"
+                  }
+                }
+              }
+            }
+          },
+          "408": {
+            "description": "Resource timed out",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorResponse"
+                },
+                "examples": {
+                  "RequestProcessError": {
+                    "$ref": "#/components/examples/TimeOut"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/whatsapp_bot": {
+      "post": {
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Added successfully"
+          },
+          "400": {
+            "description": "Unable to process request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorResponse"
+                },
+                "examples": {
+                  "RequestProcessError": {
+                    "$ref": "#/components/examples/RequestProcessError"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authrization error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorResponse"
+                },
+                "examples": {
+                  "RequestProcessError": {
+                    "$ref": "#/components/examples/AuthorizationError"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Request route not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorResponse"
+                },
+                "examples": {
+                  "RequestProcessError": {
+                    "$ref": "#/components/examples/RouteNotFound"
+                  }
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Method not allowed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorResponse"
+                },
+                "examples": {
+                  "RequestProcessError": {
+                    "$ref": "#/components/examples/MethodNotAllowed"
+                  }
+                }
+              }
+            }
+          },
+          "408": {
+            "description": "Resource timed out",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorResponse"
+                },
+                "examples": {
+                  "RequestProcessError": {
+                    "$ref": "#/components/examples/TimeOut"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "errorResponse": {
+        "title": "Error response",
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          }
+        }
+      },
+      "successResponse": {
+        "title": "Success response",
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "output": {
+            "type": "string"
+          },
+          "result": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          }
+        }
+      },
+      "templatingSuccessResponse": {
+        "title": "Templating success response",
+        "type": "object",
+        "properties": {
+          "MESSAGE": {
+            "type": "string"
+          },
+          "update_status": {
+            "type": "object"
+          }
+        }
+      }
+    },
+    "examples": {
+      "AuthorizationError": {
+        "description": "Invalid token",
+        "value": {
+          "message": "Unauthorized"
+        }
+      },
+      "RequestProcessError": {
+        "description": "Unable to process request",
+        "value": {
+          "message": "unable to process the request due to invalid syntax"
+        }
+      },
+      "RouteNotFound": {
+        "description": "Route not found",
+        "value": {
+          "message": "requested route not found"
+        }
+      },
+      "MethodNotAllowed": {
+        "description": "Unable to process request",
+        "value": {
+          "message": "Method not allowed"
+        }
+      },
+      "TimeOut": {
+        "description": "Request time out",
+        "value": {
+          "message": "resource request timed out"
+        }
+      }
+    },
+    "securitySchemes": {
+      "api_key": {
+        "type": "apiKey",
+        "name": "authorization",
+        "in": "header"
+      }
+    }
+  }
+}
