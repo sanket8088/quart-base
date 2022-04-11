@@ -2,11 +2,13 @@ from quart import Quart, request, g
 from quart_cors import cors
 from .invoker.routes import invoker_bp
 from .ranger.routes import ranger_bp
+from quart_schema import QuartSchema, validate_request, validate_response
 
 
 app = Quart(__name__)
 # app.config.from_object(settings)
 app = cors(app, allow_origin=app.config.get("CORS_ALLOWED_ORIGINS"))
+QuartSchema(app)
 
 
 @app.before_serving
@@ -15,10 +17,9 @@ async def __init__():
     _register_blueprints()
 
 
-
 def _register_blueprints():
     app.register_blueprint(invoker_bp)
     app.register_blueprint(ranger_bp)
     return
 
-#hypercorn app.server:app
+# hypercorn app.server:app
